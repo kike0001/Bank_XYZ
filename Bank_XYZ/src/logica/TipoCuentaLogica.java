@@ -10,5 +10,23 @@ package logica;
  * @author AG
  */
 public class TipoCuentaLogica {
+      private int IdTipoCuenta;
+      private String TipoCuenta;
+
+    public int getIdTipoCuenta() {
+        return IdTipoCuenta;
+    }
+
+    public void setIdTipoCuenta(int IdTipoCuenta) {
+        this.IdTipoCuenta = IdTipoCuenta;
+    }
+
+    public String getTipoCuenta() {
+        return TipoCuenta;
+    }
+
+    public void setTipoCuenta(String TipoCuenta) {
+        this.TipoCuenta = TipoCuenta;
+    }
     
 }

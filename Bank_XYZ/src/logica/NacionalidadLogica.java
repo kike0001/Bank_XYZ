@@ -10,5 +10,24 @@ package logica;
  * @author AG
  */
 public class NacionalidadLogica {
-    
+      private int idNacionalidad;
+    private String Nacionalidadcol;
+
+    public int getIdNacionalidad() {
+        return idNacionalidad;
+    }
+
+    public void setIdNacionalidad(int idNacionalidad) {
+        this.idNacionalidad = idNacionalidad;
+    }
+
+    public String getNacionalidadcol() {
+        return Nacionalidadcol;
+    }
+
+    public void setNacionalidadcol(String Nacionalidadcol) {
+        this.Nacionalidadcol = Nacionalidadcol;
+    }
+
+  
 }
