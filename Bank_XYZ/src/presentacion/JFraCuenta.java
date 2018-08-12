@@ -5,6 +5,12 @@
  */
 package presentacion;
 
+import dao.ClienteDao;
+import java.sql.SQLException;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import logica.ClienteLogica;
+
 /**
  *
  * @author AG
@@ -15,8 +21,35 @@ public class JFraCuenta extends javax.swing.JFrame {
      * Creates new form JFraCuenta
      */
     public JFraCuenta() {
-        initComponents();
+        
+        
     }
+    
+    private void llenarTabla() throws SQLException{
+       
+        
+        
+        ClienteDao dao = new ClienteDao();
+        List<ClienteLogica> miLista = dao.getLista();
+        
+        DefaultTableModel temp = (DefaultTableModel) this.jTClientes.getModel(); 
+        
+        for(ClienteLogica c1:miLista){
+            //Se crea un array que sera una de las filas de la tabla.
+            Object[] fila = new Object[7]; // Hay 2 columnas en la tabla
+            // Se rellena cada posicion del array con una de las columnas de la tabla en base de datos.
+            
+                fila[0] = c1.getIdCliente();
+                fila[1] = c1.getNombres();
+                fila[2] = c1.getApellidos();
+                fila[3] = c1.getDireccion();
+                fila[4] = c1.getIdSexo();
+                fila[5] = c1.getTelefono();
+                fila[6] = c1.getIdNacionalidad();
+                temp.addRow(fila);
+               
+        }   
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,6 +62,8 @@ public class JFraCuenta extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTClientes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -42,14 +77,32 @@ public class JFraCuenta extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 140, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 160, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, -1, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, -10, 140, 160));
+
+        jTClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID_Clientes", "Nombre", "Apellido", "Direccion", "Telefono", "Sexo", "Nacionalidad"
+            }
+        ));
+        jScrollPane1.setViewportView(jTClientes);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 160, 420, 130));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -92,5 +145,7 @@ public class JFraCuenta extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTClientes;
     // End of variables declaration//GEN-END:variables
 }

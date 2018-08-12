@@ -5,10 +5,19 @@
  */
 package presentacion;
 
+import dao.ClienteDao;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static javafx.scene.paint.Color.color;
 import static javafx.scene.paint.Color.color;
+import javax.swing.JOptionPane;
+import logica.ClienteLogica;
+import logica.NacionalidadLogica;
+import logica.SexoLogica;
 
 /**
  *
@@ -22,7 +31,10 @@ public class JFraMdi extends javax.swing.JFrame {
      * Creates new form JFraMdi
      */
     public JFraMdi() {
+        
         initComponents();
+        llenarCbS();
+        llenarCbN();
         this.jPlClientes.setVisible(false);
         
         jTFApellido.setBackground(new Color(0,0,0,0));
@@ -33,15 +45,56 @@ public class JFraMdi extends javax.swing.JFrame {
         scroll.setOpaque(false);
         scroll.getViewport().setOpaque(false);
         scroll.setBorder(null);
-        
-        
-        
-        
         jTxADireccion.setBackground(new Color(0,0,0,0));
         
         
         
+        
     }
+    
+    
+     private void llenarCbS() {
+        try{
+            ClienteDao dao = new ClienteDao();   
+            jCbSexo1.removeAllItems(); 
+
+            List<SexoLogica> miComboSexo;
+
+            miComboSexo = dao.getComboSexo();
+
+        for(int i=0; i<miComboSexo.size();i++){
+
+
+            jCbSexo1.addItem(miComboSexo.get(i).getSexo());
+            
+         }
+            
+    }catch(SQLException e){
+        JOptionPane.showMessageDialog(null, e);
+    }  
+    
+  
+}
+     private void llenarCbN(){
+       try{
+        ClienteDao dao = new ClienteDao();   
+        jCbNacionalidad.removeAllItems();
+
+        List<NacionalidadLogica> miComboNacionalidad;
+
+        miComboNacionalidad = dao.getComboNacionalidad();
+
+        for(int i=0; i<miComboNacionalidad.size();i++){
+
+            jCbNacionalidad.addItem(miComboNacionalidad.get(i).getNacionalidadcol());
+        }
+        
+        
+    }catch(SQLException e){
+        JOptionPane.showMessageDialog(null, e);
+    }
+    
+}
 
     
 
@@ -96,7 +149,7 @@ public class JFraMdi extends javax.swing.JFrame {
         jLabel35 = new javax.swing.JLabel();
         jTFApellido = new javax.swing.JTextField();
         jTFId = new javax.swing.JTextField();
-        jCbSexo = new javax.swing.JComboBox<>();
+        jCbNacionalidad = new javax.swing.JComboBox<>();
         jPnlEliminarCliente = new javax.swing.JPanel();
         jLabel38 = new javax.swing.JLabel();
         jPnlCancelarCliente = new javax.swing.JPanel();
@@ -240,14 +293,15 @@ public class JFraMdi extends javax.swing.JFrame {
 
         jPlClientes.add(jPnlEditarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 218, 130, 30));
 
-        jCbSexo1.setBackground(new java.awt.Color(255, 255, 255));
         jCbSexo1.setFont(new java.awt.Font("Avenir Next", 0, 12)); // NOI18N
         jCbSexo1.setForeground(new java.awt.Color(255, 255, 255));
-        jCbSexo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPlClientes.add(jCbSexo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 190, -1));
 
         jPnlGuardarCliente.setBackground(new java.awt.Color(36, 47, 70));
         jPnlGuardarCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPnlGuardarClienteMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jPnlGuardarClienteMousePressed(evt);
             }
@@ -314,23 +368,28 @@ public class JFraMdi extends javax.swing.JFrame {
 
         jTFId.setFont(new java.awt.Font("Avenir Next", 0, 12)); // NOI18N
         jTFId.setForeground(new java.awt.Color(255, 255, 255));
-        jTFId.setText("Id:");
         jTFId.setBorder(null);
         jTFId.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jTFIdMousePressed(evt);
             }
         });
+        jTFId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTFIdActionPerformed(evt);
+            }
+        });
         jPlClientes.add(jTFId, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 30, -1));
 
-        jCbSexo.setBackground(new java.awt.Color(255, 255, 255));
-        jCbSexo.setFont(new java.awt.Font("Avenir Next", 0, 12)); // NOI18N
-        jCbSexo.setForeground(new java.awt.Color(255, 255, 255));
-        jCbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPlClientes.add(jCbSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, 190, -1));
+        jCbNacionalidad.setFont(new java.awt.Font("Avenir Next", 0, 12)); // NOI18N
+        jCbNacionalidad.setForeground(new java.awt.Color(255, 255, 255));
+        jPlClientes.add(jCbNacionalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, 190, -1));
 
         jPnlEliminarCliente.setBackground(new java.awt.Color(36, 47, 70));
         jPnlEliminarCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPnlEliminarClienteMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jPnlEliminarClienteMousePressed(evt);
             }
@@ -398,21 +457,19 @@ public class JFraMdi extends javax.swing.JFrame {
         jPlClientes.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 0, 130, 40));
 
         jLabel40.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Clientes.png"))); // NOI18N
-        jPlClientes.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 480));
+        jPlClientes.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -80, 700, 690));
 
         getContentPane().add(jPlClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 700, 480));
 
         jPanel2.setBackground(new java.awt.Color(36, 47, 70));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jSeparator1.setBackground(new java.awt.Color(255, 255, 255));
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator1.setAlignmentX(0.1F);
         jSeparator1.setAlignmentY(0.1F);
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 140, -1));
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, -1, -1));
 
-        jSeparator2.setBackground(new java.awt.Color(255, 255, 255));
         jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator2.setAlignmentX(0.3F);
         jSeparator2.setAlignmentY(0.3F);
@@ -441,17 +498,17 @@ public class JFraMdi extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(36, 47, 70));
         jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jPanel3MousePressed(evt);
-            }
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel3MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jPanel3MouseExited(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel3MouseEntered(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel3MousePressed(evt);
             }
         });
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -466,14 +523,17 @@ public class JFraMdi extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(36, 47, 70));
         jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jPanel5MousePressed(evt);
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel5MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jPanel5MouseExited(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel5MouseEntered(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel5MousePressed(evt);
             }
         });
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -619,10 +679,109 @@ public class JFraMdi extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.jPlClientes.setVisible(true);
         this.jPlPrincipal.setVisible(false);
+       
         
        
         
     }//GEN-LAST:event_jPanel3MouseClicked
+    
+    
+     private void guardarCliente(){
+        
+        ClienteLogica c1 = new ClienteLogica();
+        
+        
+        c1.setNombres(this.jTFNombre.getText());
+        c1.setApellidos(this.jTFApellido.getText());
+        c1.setDireccion(this.jTxADireccion.getText());
+        c1.setIdSexo(this.jCbSexo1.getSelectedIndex() + 1);
+        c1.setIdNacionalidad(this.jCbNacionalidad.getSelectedIndex() + 1);
+        c1.setTelefono(this.jTFTelefono.getText());
+         
+             
+        try {
+            ClienteDao dao = new ClienteDao();
+            dao.insertarCliente(c1);
+            JOptionPane.showMessageDialog(null, "Registro almacenado satisfactoriamente.");
+            
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al almacenar el Cliente." + e);
+        }
+    }
+     private boolean verificarTextField(){
+        boolean estado;
+        
+        if(jTFNombre.getText().isEmpty()  && jTxADireccion.getText().isEmpty() && jTFTelefono.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Ingrese los campos vacios");
+            jTFNombre.requestFocus();
+            estado = false;
+        }else if(jTxADireccion.getText().isEmpty() && jTFTelefono.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Ingrese los campos vacios");
+            jTxADireccion.requestFocus();
+            estado = false;
+        }else if(jTFTelefono.getText().isEmpty() && jTFApellido.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Ingrese los campos vacios");
+            jTFApellido.requestFocus();
+            estado = false;
+        }else if(jTFTelefono.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Ingrese los campos vacios");
+            jTFTelefono.requestFocus();
+            estado = false;
+        }else{
+            estado = true;
+        }
+        return estado;
+    }
+    
+    private void jPnlGuardarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnlGuardarClienteMouseClicked
+if(verificarTextField()==true){
+            guardarCliente();
+            
+        }     
+        
+        
+    }//GEN-LAST:event_jPnlGuardarClienteMouseClicked
+
+    private void eliminarCliente(){
+   ClienteLogica c1 = new ClienteLogica();
+   
+   c1.setIdCliente(Integer.parseInt(this.jTFId.getText()));
+    
+            
+        
+        try {
+            ClienteDao dao = new ClienteDao();
+            dao.eliminarCliente(c1);
+            JOptionPane.showMessageDialog(null,"Registro eliminado satisfactoriamente");
+           
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Error al eliminar Cliente" + e );
+        }
+   }
+    private void jPnlEliminarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPnlEliminarClienteMouseClicked
+        // TODO add your handling code here:
+        
+        if (JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar el registro?", "Advertencia",
+        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+         eliminarCliente();
+          
+                
+            
+   
+        }
+    }//GEN-LAST:event_jPnlEliminarClienteMouseClicked
+
+    private void jTFIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTFIdActionPerformed
+
+    private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_jPanel5MouseClicked
 
   
     
@@ -662,7 +821,7 @@ public class JFraMdi extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jCbSexo;
+    private javax.swing.JComboBox<String> jCbNacionalidad;
     private javax.swing.JComboBox<String> jCbSexo1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

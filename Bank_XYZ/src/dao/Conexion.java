@@ -4,25 +4,20 @@
  * and open the template in the editor.
  */
 package dao;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 /**
  *
- * @author AG
+ * @author Hermon Martinez
  */
-public class coneccion {
-    static Statement Sentencia;
-    static ResultSet Resultado; 
+public class Conexion {
+   
     public static Connection conectarI() throws SQLException{
     try{
             Class.forName("com.mysql.jdbc.Driver");
 
-            return DriverManager.getConnection("jdbc:mysql://localhost:3306/ban_xyz","root","Ezreal21");
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/ban_xyz?zeroDateTimeBehavior=convertToNull","root","1992hermon");
 
         }catch(ClassNotFoundException e){
             throw new SQLException(e.getMessage());

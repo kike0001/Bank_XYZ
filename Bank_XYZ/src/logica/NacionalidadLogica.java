@@ -10,7 +10,8 @@ package logica;
  * @author AG
  */
 public class NacionalidadLogica {
-      private int idNacionalidad;
+     
+     private int idNacionalidad;
     private String Nacionalidadcol;
 
     public int getIdNacionalidad() {
